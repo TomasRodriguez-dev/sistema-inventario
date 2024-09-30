@@ -1,7 +1,16 @@
 const jwt = require('jsonwebtoken');
 const Usuario = require('./../models/Usuario');
+const Rol = require('./../models/Rol');
+const { jwtSecret } = require('../configuration/envs');
 
-// Controlador de registro
+/**
+ * Registro de un nuevo usuario
+ * @param {Object} req.body - Cuerpo de la solicitud
+ * @param {string} req.body.nombre - Nombre del usuario
+ * @param {string} req.body.email - Email del usuario
+ * @param {string} req.body.contrasena - Contraseña del usuario
+ * @returns 
+ */
 exports.register = async (req, res) => {
     const { nombre, email, contrasena } = req.body;
 
@@ -12,22 +21,29 @@ exports.register = async (req, res) => {
             return res.status(400).json({ error: 'El usuario ya está registrado', success: false });
         }
 
-        // Crear el usuario, la fecha_creacion se almacena automáticamente
+        // Obtener el rol de usuario 
+        const rolUsuario = await Rol.findByPk(3);
+        if (!rolUsuario) {
+            return res.status(500).json({ error: 'Error al asignar rol de usuario', success: false });
+        }
+
+        // Crear el usuario común
         const usuario = await Usuario.create({
             nombre,
             email,
-            contrasena
+            contrasena,
+            rol_id: rolUsuario.id,
+            estado: 'activo'
         });
 
-        // Excluir campos no deseados
-        const { contrasena: _, tipo, estado, fecha_creacion, fecha_actualizacion, ...usuarioData } = usuario.dataValues;
+        // Excluir campos sensibles
+        const { contrasena: _, rol_id, estado, fecha_creacion, fecha_actualizacion, ...usuarioData } = usuario.dataValues;
 
         // Generar el token JWT
-        const secretKey = 'TEST';
-        const payload = { userId: usuario.id };
-        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+        const payload = { userId: usuario.id, rol_id: usuario.rol_id };
+        const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
-        // Enviar la respuesta sin la fecha_creacion
+        // Enviar la respuesta
         res.status(200).json({ usuario: usuarioData, token, success: true });
     } catch (error) {
         console.error(error);
@@ -35,11 +51,17 @@ exports.register = async (req, res) => {
     }
 };
 
-// Controlador de login
+/**
+ * Inicio de sesión de un usuario
+ * @param {Object} req.body - Cuerpo de la solicitud
+ * @param {string} req.body.email - Email del usuario
+ * @param {string} req.body.contrasena - Contraseña del usuario
+ * @returns 
+ */
 exports.login = async (req, res) => {
     const { email, contrasena } = req.body;
 
-    // Check if email or password is missing
+    // Verificar si el email o la contraseña están faltando
     if (!email || !contrasena) {
         return res.status(400).json({ error: 'Email y contraseña son requeridos', success: false });
     }
@@ -58,9 +80,8 @@ exports.login = async (req, res) => {
         }
 
         // Generar el token JWT
-        const secretKey = 'TEST';
         const payload = { userId: usuario.id };
-        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+        const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
         const { contrasena: _, tipo, estado, ultima_conexion, fecha_creacion, fecha_actualizacion, ...usuarioData } = usuario.dataValues;
         res.status(200).json({ usuario: usuarioData, token, success: true });

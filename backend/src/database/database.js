@@ -1,6 +1,9 @@
 const { Sequelize } = require('sequelize');
 const config = require('./../config');
 
+/**
+ * Crear una nueva instancia de Sequelize
+ */
 const sequelize = new Sequelize(config.database, config.user, config.password, {
     host: config.host,
     port: config.port,
@@ -8,7 +11,9 @@ const sequelize = new Sequelize(config.database, config.user, config.password, {
     logging: false,
 });
 
-// Función para conectarse a la base de datos
+/**
+ * Conectar a la base de datos
+ */
 const connectDB = async () => {
     try {
         await sequelize.authenticate();

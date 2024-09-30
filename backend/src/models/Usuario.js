@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database/database');
 const bcrypt = require('bcrypt');
-const moment = require('moment'); // Para formatear la fecha
 
 const Usuario = sequelize.define('Usuario', {
     id: {
@@ -22,12 +21,18 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
-    tipo: {
-        type: DataTypes.STRING(20),
-        allowNull: true,
+    rol_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 3,
     },
     estado: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.ENUM('activo', 'inactivo'),
+        allowNull: false,
+        defaultValue: 'activo',
+    },
+    creado_por: {
+        type: DataTypes.INTEGER,
         allowNull: true,
     },
     ultima_conexion: {
@@ -46,12 +51,6 @@ const Usuario = sequelize.define('Usuario', {
 }, {
     timestamps: false,
     tableName: 'Usuario',
-    indexes: [
-        {
-            unique: true,
-            fields: ['email'],
-        }
-    ]
 });
 
 // Encriptar contraseña antes de crear un usuario

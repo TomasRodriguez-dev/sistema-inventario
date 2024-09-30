@@ -5,8 +5,16 @@ const Notificacion = require('./Notificacion');
 const MetodoPago = require('./MetodoPago');
 const EstadoPago = require('./EstadoPago');
 const Recibo = require('./Recibo');
+const Rol = require('./Rol'); // Asegúrate de importar el modelo Rol
 
 // Relaciones entre modelos
+// Relación entre Usuario y Rol
+Usuario.belongsTo(Rol, { foreignKey: 'rol_id', as: 'rol' });
+Rol.hasMany(Usuario, { foreignKey: 'rol_id' });
+
+// Relación de Usuario consigo mismo (para creado_por)
+Usuario.belongsTo(Usuario, { as: 'CreadoPor', foreignKey: 'creado_por' });
+
 Usuario.hasMany(Pago, { foreignKey: 'id_usuario' });
 Pago.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
@@ -31,5 +39,6 @@ module.exports = {
     Notificacion,
     MetodoPago,
     EstadoPago,
-    Recibo
+    Recibo,
+    Rol
 };

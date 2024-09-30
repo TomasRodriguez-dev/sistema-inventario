@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const envs = require("./configuration/envs");
 const authRoutes = require("./routes/authRoutes"); 
+const userRoutes = require("./routes/userRoutes");
 
 //* Express
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 //* Rutas
-app.use("/api/auth", authRoutes); 
+app.use("/api/auth", authRoutes);
+app.use("/api", userRoutes);
 
 module.exports = app;
