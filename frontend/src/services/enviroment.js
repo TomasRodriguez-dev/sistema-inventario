@@ -6,6 +6,11 @@ const environment = {
     auth:{
         login: `${API_BASE_URL}/auth/login`,
         register: `${API_BASE_URL}/auth/register`,
+    },
+    usuarios: {
+        listar_usuarios: `${API_BASE_URL}/pev_usuarios`,
+        editar_usuario: `${API_BASE_URL}/pev_usuario`,
+        eliminar_usuario: `${API_BASE_URL}/pev_usuario`,
     }
 };
 
