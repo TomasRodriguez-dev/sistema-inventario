@@ -4,6 +4,7 @@ import AuthPage from '../pages/auth/AuthPage';
 import HomePage from '../pages/home/HomePage';
 import PrivateRoute from './PrivateRoutes';
 import PublicRoute from './PublicRoute';
+import Layout from '../components/layout/LayoutComponent';
 
 const AppRoutes = () => {
     return (
@@ -18,12 +19,15 @@ const AppRoutes = () => {
                     <AuthPage />
                 </PublicRoute>
             } />
-            <Route path="/" element={
+            <Route path="/inicio" element={
                 <PrivateRoute>
-                    <HomePage />
+                    <Layout>
+                        <HomePage />
+                    </Layout>
                 </PrivateRoute>
             } />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* Agrega aquí más rutas privadas envueltas en el componente Layout */}
+            <Route path="*" element={<Navigate to="/inicio" replace />} />
         </Routes>
     );
 };

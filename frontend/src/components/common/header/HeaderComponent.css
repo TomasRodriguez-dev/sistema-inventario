@@ -1,0 +1,42 @@
+.layout-header {
+    background-color: var(--surface-a);
+    border-bottom: 1px solid var(--surface-d);
+    padding: 0.5rem 1rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.p-button.p-button-text {
+    color: var(--text-color);
+}
+
+.p-button.p-button-text:hover {
+    background-color: var(--surface-c);
+}
+
+.user-profile {
+    background-color: var(--surface-c);
+    border-radius: 50%;
+}
+
+.page-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 0;
+}

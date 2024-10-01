@@ -5,7 +5,7 @@ const PublicRoute = ({ children }) => {
     const isAuthenticated = localStorage.getItem('token') !== null;
 
     if (isAuthenticated) {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/inicio" replace />;
     }
 
     return children;

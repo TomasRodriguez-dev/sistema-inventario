@@ -1,0 +1,144 @@
+.layout-menu-container {
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+    visibility: visible;
+    width: 100%;
+    background-color: #1F2937; 
+}
+
+.layout-sidebar.hidden .layout-menu-container {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+}
+
+/* Modifica la regla existente del ScrollPanel */
+.custom-scrollbar {
+    height: calc(100vh - 2rem) !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.layout-sidebar.hidden .custom-scrollbar {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.layout-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el ScrollPanel */
+.custom-scrollbar .p-scrollpanel-wrapper {
+    border-right: 6px solid transparent;
+}
+
+.custom-scrollbar .p-scrollpanel-bar {
+    background-color: var(--primary-color);
+    opacity: 0;
+    transition: background-color .2s, opacity .3s;
+    width: 6px !important;
+    height: 20% !important;
+}
+
+.custom-scrollbar:hover .p-scrollpanel-bar {
+    opacity: 1;
+}
+
+.custom-scrollbar .p-scrollpanel-bar:hover {
+    background-color: var(--primary-color);
+}
+
+.custom-scrollbar .p-scrollpanel-content {
+    height: 100% !important;
+}
+
+/* Estilos para el menú */	
+.layout-menu li {
+    padding: 0.5rem 1rem;
+}
+
+.layout-menu li a {
+    display: flex;
+    align-items: center;
+    color: #ffffff; /* Cambiado a blanco para mejor contraste */
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+}
+
+.layout-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Cambiado para mejor visibilidad */
+}
+
+.layout-menu li a i {
+    margin-right: 0.5rem;
+}
+
+.layout-menu li.active-menuitem > a {
+    font-weight: 700;
+    color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.2); /* Añadido para resaltar el ítem activo */
+}
+
+.layout-menu li ul {
+    list-style-type: none;
+    padding: 0 0 0 1rem;
+}
+
+.layout-menuitem-category {
+    font-weight: 600;
+    color: #D1D5DB; /* Cambiado para mejor visibilidad */
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu-separator {
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Cambiado para mejor visibilidad */
+    margin: 1rem 0;
+}
+
+/* Animaciones para submenús */
+.layout-submenu-wrapper-enter {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.layout-submenu-wrapper-enter-active {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 1s ease-in-out;
+}
+
+.layout-submenu-wrapper-exit {
+    max-height: 1000px;
+    overflow: hidden;
+}
+
+.layout-submenu-wrapper-exit-active {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
+}
+
+.layout-menu-container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-menu {
+    flex-grow: 1;
+    padding-bottom: 2rem; 
+}
+.custom-scrollbar .p-scrollpanel-content {
+    min-height: 100% !important;
+}
+
+.custom-scrollbar.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
