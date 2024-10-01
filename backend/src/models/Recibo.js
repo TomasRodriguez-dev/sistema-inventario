@@ -7,7 +7,7 @@ const Recibo = sequelize.define('Recibo', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_pago: {
+    idpago: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },

@@ -21,7 +21,7 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
-    rol_id: {
+    idrol: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 3,

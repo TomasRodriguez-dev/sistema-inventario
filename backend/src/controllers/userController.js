@@ -6,15 +6,15 @@ const Usuario = require('../models/Usuario');
  * @param {string} req.body.nombre - Nombre del usuario
  * @param {string} req.body.email - Email del usuario
  * @param {string} req.body.contrasena - Contraseña del usuario
- * @param {number} req.body.rol_id - ID del rol del usuario
+ * @param {number} req.body.idrol - ID del rol del usuario
  * @param {Object} req.user - Objeto de usuario autenticado
  * @param {number} req.user.id - ID del usuario autenticado
  * @returns 
  */
 exports.createUser = async (req, res) => {
-    const { nombre, email, contrasena, rol_id } = req.body;
+    const { nombre, email, contrasena, idrol } = req.body;
     const creadorId = req.user.id;
-    const creadorRolId = req.user.rol_id;
+    const creadorRolId = req.user.idrol;
 
     try {
         // Verificar permisos
@@ -22,7 +22,7 @@ exports.createUser = async (req, res) => {
             return res.status(403).json({ error: 'No tienes permisos para crear usuarios', success: false });
         }
 
-        if (creadorRolId === 2 && rol_id !== 3) { 
+        if (creadorRolId === 2 && idrol !== 3) { 
             return res.status(403).json({ error: 'Los administradores solo pueden crear usuarios comunes', success: false });
         }
 
@@ -37,7 +37,7 @@ exports.createUser = async (req, res) => {
             nombre,
             email,
             contrasena,
-            rol_id: creadorRolId === 1 ? rol_id : 3,
+            idrol: creadorRolId === 1 ? idrol : 3,
             estado: 'activo',
             creado_por: creadorId
         });
@@ -66,13 +66,13 @@ exports.createUser = async (req, res) => {
  * @param {string} req.body.estado - Nuevo estado del usuario
  * @param {Object} req.user - Objeto de usuario autenticado
  * @param {number} req.user.id - ID del usuario autenticado
- * @param {string} req.user.rol - Rol del usuario autenticado
+ * @param {number} req.user.idrol - ID del rol del usuario autenticado
  * @returns 
  */
 exports.editUser = async (req, res) => {
     const { id } = req.params;
     const { nombre, email, rol, estado } = req.body;
-    const editorRol = req.user.rol;
+    const editorRol = req.user.idrol;
 
     try {
         const usuario = await Usuario.findByPk(id);
@@ -82,11 +82,11 @@ exports.editUser = async (req, res) => {
         }
 
         // Verificar permisos
-        if (editorRol === 'usuario') {
+        if (editorRol === 3) {
             return res.status(403).json({ error: 'No tienes permisos para editar usuarios', success: false });
         }
 
-        if (editorRol === 'admin' && (usuario.rol !== 'usuario' || rol !== 'usuario')) {
+        if (editorRol === 2 && (usuario.idrol !== 3 || rol !== 3)) {
             return res.status(403).json({ error: 'Los administradores solo pueden editar usuarios comunes', success: false });
         }
 
@@ -94,7 +94,7 @@ exports.editUser = async (req, res) => {
         await usuario.update({
             nombre: nombre || usuario.nombre,
             email: email || usuario.email,
-            rol: editorRol === 'superadmin' ? (rol || usuario.rol) : usuario.rol,
+            rol: editorRol === 1 ? (rol || usuario.rol) : usuario.rol,
             estado: estado || usuario.estado,
             fecha_actualizacion: new Date()
         });
@@ -118,12 +118,12 @@ exports.editUser = async (req, res) => {
  * @param {number} req.params.id - ID del usuario a eliminar
  * @param {Object} req.user - Objeto de usuario autenticado
  * @param {number} req.user.id - ID del usuario autenticado
- * @param {string} req.user.rol - Rol del usuario autenticado
+ * @param {number} req.user.idrol - ID del rol del usuario autenticado
  * @returns 
  */
 exports.deleteUser = async (req, res) => {
     const { id } = req.params;
-    const eliminadorRol = req.user.rol;
+    const eliminadorRol = req.user.idrol;
 
     try {
         const usuario = await Usuario.findByPk(id);
@@ -133,11 +133,11 @@ exports.deleteUser = async (req, res) => {
         }
 
         // Verificar permisos 
-        if (eliminadorRol === 'usuario') {
+        if (eliminadorRol === 3) {
             return res.status(403).json({ error: 'No tienes permisos para eliminar usuarios', success: false });
         }
 
-        if (eliminadorRol === 'admin' && usuario.rol !== 'usuario') {
+        if (eliminadorRol === 2 && usuario.idrol !== 3) {
             return res.status(403).json({ error: 'Los administradores solo pueden eliminar usuarios comunes', success: false });
         }
 
@@ -158,11 +158,11 @@ exports.deleteUser = async (req, res) => {
  * Obtener la lista de usuarios
  * @param {Object} req.user - Objeto de usuario autenticado
  * @param {number} req.user.id - ID del usuario autenticado
- * @param {number} req.user.rol_id - ID del rol del usuario autenticado
+ * @param {number} req.user.idrol - ID del rol del usuario autenticado
  * @returns 
  */
 exports.getUsers = async (req, res) => {
-    const solicitanteRolId = req.user.rol_id;
+    const solicitanteRolId = req.user.idrol;
 
     try {
         let usuarios;

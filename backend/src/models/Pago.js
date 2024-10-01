@@ -7,7 +7,7 @@ const Pago = sequelize.define('Pago', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_usuario: {
+    idusuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
@@ -19,15 +19,15 @@ const Pago = sequelize.define('Pago', {
         type: DataTypes.DATEONLY,
         allowNull: false,
     },
-    id_metodo_pago: {
+    idmetodo_pago: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    id_estado_pago: {
+    idestado_pago: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    id_recibo: {
+    idrecibo: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },

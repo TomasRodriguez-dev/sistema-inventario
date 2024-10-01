@@ -7,11 +7,11 @@ const Notificacion = sequelize.define('Notificacion', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_usuario: {
+    idusuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    id_pago: {
+    idpago: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },

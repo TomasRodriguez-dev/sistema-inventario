@@ -32,15 +32,15 @@ exports.register = async (req, res) => {
             nombre,
             email,
             contrasena,
-            rol_id: rolUsuario.id,
+            idrol: rolUsuario.id,
             estado: 'activo'
         });
 
         // Excluir campos sensibles
-        const { contrasena: _, rol_id, estado, fecha_creacion, fecha_actualizacion, ...usuarioData } = usuario.dataValues;
+        const { contrasena: _, idrol, estado, fecha_creacion, fecha_actualizacion, ...usuarioData } = usuario.dataValues;
 
         // Generar el token JWT
-        const payload = { userId: usuario.id, rol_id: usuario.rol_id };
+        const payload = { userId: usuario.id, idrol: usuario.idrol };
         const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
         // Enviar la respuesta

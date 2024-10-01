@@ -9,28 +9,28 @@ const Rol = require('./Rol'); // Asegúrate de importar el modelo Rol
 
 // Relaciones entre modelos
 // Relación entre Usuario y Rol
-Usuario.belongsTo(Rol, { foreignKey: 'rol_id', as: 'rol' });
-Rol.hasMany(Usuario, { foreignKey: 'rol_id' });
+Usuario.belongsTo(Rol, { foreignKey: 'idrol', as: 'rol' });
+Rol.hasMany(Usuario, { foreignKey: 'idrol' });
 
 // Relación de Usuario consigo mismo (para creado_por)
 Usuario.belongsTo(Usuario, { as: 'CreadoPor', foreignKey: 'creado_por' });
 
-Usuario.hasMany(Pago, { foreignKey: 'id_usuario' });
-Pago.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+Usuario.hasMany(Pago, { foreignKey: 'idusuario' });
+Pago.belongsTo(Usuario, { foreignKey: 'idusuario' });
 
-Usuario.hasMany(Notificacion, { foreignKey: 'id_usuario' });
-Notificacion.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+Usuario.hasMany(Notificacion, { foreignKey: 'idusuario' });
+Notificacion.belongsTo(Usuario, { foreignKey: 'idusuario' });
 
-Pago.hasOne(Recibo, { foreignKey: 'id_pago' });
-Recibo.belongsTo(Pago, { foreignKey: 'id_pago' });
+Pago.hasOne(Recibo, { foreignKey: 'idpago' });
+Recibo.belongsTo(Pago, { foreignKey: 'idpago' });
 
-Pago.belongsTo(MetodoPago, { foreignKey: 'id_metodo_pago' });
-MetodoPago.hasMany(Pago, { foreignKey: 'id_metodo_pago' });
+Pago.belongsTo(MetodoPago, { foreignKey: 'idmetodopago' });
+MetodoPago.hasMany(Pago, { foreignKey: 'idmetodopago' });
 
-Pago.belongsTo(EstadoPago, { foreignKey: 'id_estado_pago' });
-EstadoPago.hasMany(Pago, { foreignKey: 'id_estado_pago' });
+Pago.belongsTo(EstadoPago, { foreignKey: 'idestado_pago' });
+EstadoPago.hasMany(Pago, { foreignKey: 'idestado_pago' });
 
-Notificacion.belongsTo(Pago, { foreignKey: 'id_pago' });
+Notificacion.belongsTo(Pago, { foreignKey: 'idpago' });
 
 module.exports = {
     sequelize, 

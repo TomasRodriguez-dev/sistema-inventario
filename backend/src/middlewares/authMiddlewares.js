@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
         const decoded = jwt.verify(token, jwtSecret);
         
         const usuario = await Usuario.findByPk(decoded.userId, {
-            attributes: ['id', 'rol_id'],
+            attributes: ['id', 'idrol'],
             include: [{
                 model: Rol,
                 as: 'rol',
@@ -35,8 +35,7 @@ const auth = async (req, res, next) => {
 
         req.user = {
             id: usuario.id,
-            rol_id: usuario.rol_id,
-            rol: usuario.rol.nombre
+            idrol: usuario.idrol
         };
         next();
     } catch (err) {
