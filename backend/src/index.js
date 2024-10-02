@@ -1,7 +1,7 @@
 const app = require("./app");
 const { connectDB, sequelize } = require("./database/database"); 
-require('./models/relaciones'); // Asegúrate de importar las relaciones aquí
-const crearRolesIniciales = require('./scripts/crearRolesIniciales');
+require('./models/relaciones');
+const inicializarDatos = require('./scripts/inicializarDatos');
 
 const main = async () => {
     try {
@@ -9,11 +9,11 @@ const main = async () => {
         await connectDB();
 
         // Sincronizar modelos
-        await sequelize.sync(); // Asegúrate de que sequelize no sea undefined
+        await sequelize.sync();
         console.log('Modelos sincronizados con la base de datos');
 
-        // Crear roles iniciales
-        await crearRolesIniciales();
+        // Inicializar datos (roles, métodos de pago, estados de pago)
+        await inicializarDatos();
 
         // Iniciar el servidor
         app.listen(app.get("port"), () => {

@@ -7,3 +7,8 @@
 # production
 /build
 
+# Ignorar todo en la carpeta uploads dentro de src
+src/uploads/*
+
+# Pero mantener el archivo .gitkeep
+!src/uploads/.gitkeep

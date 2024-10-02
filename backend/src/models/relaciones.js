@@ -31,8 +31,8 @@ Pago.belongsTo(MetodoPago, { foreignKey: 'idmetodopago' });
 MetodoPago.hasMany(Pago, { foreignKey: 'idmetodopago' });
 
 // Relación de Pago con EstadoPago
-Pago.belongsTo(EstadoPago, { foreignKey: 'idestado_pago' });
-EstadoPago.hasMany(Pago, { foreignKey: 'idestado_pago' });
+Pago.belongsTo(EstadoPago, { foreignKey: 'idestadopago' });
+EstadoPago.hasMany(Pago, { foreignKey: 'idestadopago' });
 
 // Relación de Notificacion con Pago
 Notificacion.belongsTo(Pago, { foreignKey: 'idpago' });

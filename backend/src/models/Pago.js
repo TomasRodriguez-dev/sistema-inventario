@@ -19,11 +19,11 @@ const Pago = sequelize.define('Pago', {
         type: DataTypes.DATEONLY,
         allowNull: false,
     },
-    idmetodo_pago: {
+    idmetodopago: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    idestado_pago: {
+    idestadopago: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
