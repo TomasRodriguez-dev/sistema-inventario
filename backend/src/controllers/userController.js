@@ -173,26 +173,38 @@ exports.deleteUser = async (req, res) => {
  */
 exports.getUsers = async (req, res) => {
     const solicitanteRolId = req.user.idrol;
+    const { pagina = 1, limite = 10, ordenarPor = 'id', orden = 'ASC' } = req.query;
 
     try {
-        let usuarios;
-        // Si el usuario es ssuperadmin, puede ver todos los usuarios
-        if (solicitanteRolId === 1) { 
-            usuarios = await Usuario.findAll({
-                attributes: { exclude: ['contrasena'] }
-            });
-        } else if (solicitanteRolId === 2) { 
+        let opciones = {
+            attributes: { exclude: ['contrasena'] },
+            order: [[ordenarPor, orden]],
+            limit: parseInt(limite),
+            offset: (parseInt(pagina) - 1) * parseInt(limite)
+        };
+
+        // Si el usuario es superadmin, puede ver todos los usuarios
+        if (solicitanteRolId === 1) {
+            // No se necesita modificar las opciones
+        } else if (solicitanteRolId === 2) {
             // Si el usuario es admin, puede ver solo los usuarios comunes
-            usuarios = await Usuario.findAll({
-                where: { idrol: 3 }, 
-                attributes: { exclude: ['contrasena'] }
-            });
+            opciones.where = { idrol: 3 };
         } else {
             return res.status(403).json({ error: 'No tienes permisos para ver la lista de usuarios', success: false });
         }
 
+        const { count, rows: usuarios } = await Usuario.findAndCountAll(opciones);
+
+        const totalPaginas = Math.ceil(count / limite);
+
         res.status(200).json({ 
             usuarios, 
+            paginacion: {
+                totalUsuarios: count,
+                totalPaginas,
+                paginaActual: parseInt(pagina),
+                usuariosPorPagina: parseInt(limite)
+            },
             success: true
         });
     } catch (error) {

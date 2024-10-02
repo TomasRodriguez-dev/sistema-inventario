@@ -52,20 +52,34 @@ exports.registrarPago = async (req, res) => {
 exports.obtenerPagosUsuario = async (req, res) => {
     const usuarioId = req.user.id;
     const rolId = req.user.idrol;
+    const { pagina = 1, limite = 10, ordenarPor = 'fecha_pago', orden = 'DESC' } = req.query;
 
     try {
-        let pagos;
+        let opciones = {
+            order: [[ordenarPor, orden]],
+            limit: parseInt(limite),
+            offset: (parseInt(pagina) - 1) * parseInt(limite)
+        };
+
         if (rolId === 1 || rolId === 2) {
             // Administradores y superusuarios pueden ver todos los pagos
-            pagos = await Pago.findAll();
         } else {
             // Usuarios comunes solo pueden ver sus propios pagos
-            pagos = await Pago.findAll({ where: { idusuario: usuarioId } });
+            opciones.where = { idusuario: usuarioId };
         }
 
-        // Enviar la respuesta con los pagos y un mensaje de éxito
+        const { count, rows: pagos } = await Pago.findAndCountAll(opciones);
+
+        const totalPaginas = Math.ceil(count / limite);
+
         res.status(200).json({ 
             pagos, 
+            paginacion: {
+                totalPagos: count,
+                totalPaginas,
+                paginaActual: parseInt(pagina),
+                pagosPorPagina: parseInt(limite)
+            },
             mensaje: 'Pagos obtenidos exitosamente',
             success: true
         });
