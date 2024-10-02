@@ -1,7 +1,6 @@
 const { sequelize } = require('./../database/database');
 const Usuario = require('./Usuario');
 const Pago = require('./Pago');
-const Notificacion = require('./Notificacion');
 const MetodoPago = require('./MetodoPago');
 const EstadoPago = require('./EstadoPago');
 const Recibo = require('./Recibo');
@@ -18,10 +17,6 @@ Usuario.belongsTo(Usuario, { as: 'CreadoPor', foreignKey: 'creado_por' });
 Usuario.hasMany(Pago, { foreignKey: 'idusuario' });
 Pago.belongsTo(Usuario, { foreignKey: 'idusuario' });
 
-// Relación de Usuario con Notificacion
-Usuario.hasMany(Notificacion, { foreignKey: 'idusuario' });
-Notificacion.belongsTo(Usuario, { foreignKey: 'idusuario' });
-
 // Relación de Pago con Recibo
 Pago.hasOne(Recibo, { foreignKey: 'idpago' });
 Recibo.belongsTo(Pago, { foreignKey: 'idpago' });
@@ -34,14 +29,11 @@ MetodoPago.hasMany(Pago, { foreignKey: 'idmetodopago' });
 Pago.belongsTo(EstadoPago, { foreignKey: 'idestadopago' });
 EstadoPago.hasMany(Pago, { foreignKey: 'idestadopago' });
 
-// Relación de Notificacion con Pago
-Notificacion.belongsTo(Pago, { foreignKey: 'idpago' });
 
 module.exports = {
     sequelize, 
     Usuario,
     Pago,
-    Notificacion,
     MetodoPago,
     EstadoPago,
     Recibo,

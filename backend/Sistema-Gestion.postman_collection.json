@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "01288e46-bb76-4ad9-bd84-29f6ced811f7",
+		"name": "Sistema-Gestion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33042304"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"SuperAdmin\",\r\n    \"email\": \"superadmin@gmail.com\",\r\n    \"contrasena\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"superadmin@gmail.com\",\r\n    \"contrasena\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "/pev_usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzdWFyaW8iOjEsImlkcm9sIjoxLCJpYXQiOjE3Mjc4OTkxMTIsImV4cCI6MTcyNzkwMjcxMn0.tnKCD0kvSwxdjjAvrRn4Xgof0cdjNvwAnr2-bOLyf-Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyNzY2MTY3OSwiZXhwIjoxNzI3NjY1Mjc5fQ.RdYBknR4LNMDnZL7r6HUTPQ8GGBRB-MkyEzFkDODEGg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Javier\",\r\n    \"email\": \"javierrodriguez@gmail.com\",\r\n    \"contrasena\": \"123456\",\r\n    \"rol\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/pev_usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pev_usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pev_usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyNzc1MDg0NSwiZXhwIjoxNzI3NzU0NDQ1fQ.E8YkBXyV60bWWVO7mg-juMpHrkKq_PuPxU1quebRDl8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Tomas Javer Rodriguez\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/pev_usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pev_usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pev_usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzdWFyaW8iOjEsImlkcm9sIjoxLCJpYXQiOjE3Mjc4ODIyNzgsImV4cCI6MTcyNzg4NTg3OH0.0m_Lt7smxBfkxF04yqdeQelRSawKjnBUYME4LKDtHrE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/pev_usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pev_usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pev_usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/pev_usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pev_usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagos",
+			"item": [
+				{
+					"name": "/pagos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzdWFyaW8iOjEsImlkcm9sIjoxLCJpYXQiOjE3Mjc5MDI3NDAsImV4cCI6MTcyNzkwNjM0MH0.aQAVmD23NTUczmwP6InAVh_G111pncWBQLUaDowLr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idusuario\": 1,\r\n    \"monto\": 100.50,\r\n    \"fecha_pago\": \"2024-10-02\",\r\n    \"idmetodopago\": 1,\r\n    \"idestadopago\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/pago",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pago"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pagos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzdWFyaW8iOjEsImlkcm9sIjoxLCJpYXQiOjE3Mjc5MDI3NDAsImV4cCI6MTcyNzkwNjM0MH0.aQAVmD23NTUczmwP6InAVh_G111pncWBQLUaDowLr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/pagos",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pagos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recibo",
+			"item": [
+				{
+					"name": "/recibo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzdWFyaW8iOjEsImlkcm9sIjoxLCJpYXQiOjE3Mjc5MDI3NDAsImV4cCI6MTcyNzkwNjM0MH0.aQAVmD23NTUczmwP6InAVh_G111pncWBQLUaDowLr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "idpago",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "recibo",
+									"type": "file",
+									"src": "/C:/Users/rodri/Downloads/Sube-Septiembre.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/recibo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"recibo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/recibo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzdWFyaW8iOjEsImlkcm9sIjoxLCJpYXQiOjE3Mjc5MDI3NDAsImV4cCI6MTcyNzkwNjM0MH0.aQAVmD23NTUczmwP6InAVh_G111pncWBQLUaDowLr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:3000/api/recibo/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"recibo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
