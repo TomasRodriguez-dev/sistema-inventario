@@ -16,12 +16,12 @@ const RegisterForm = ({ onRegisterSuccess, onLoginClick }) => {
     e.preventDefault();
     try {
       const response = await register({ nombre, email, contrasena });
-      if (response.data && response.data.token) {
-        onRegisterSuccess(response.data);
+      
+      if ( response.success) {
+        onRegisterSuccess(response.success);
         showAlert('success', 'Registro exitoso. Por favor, inicie sesión.', 3000);
-        setTimeout(() => onLoginClick(), 3000);
-      } else {
-        handleRegisterError(response.data && response.data.error ? response.data.error : 'Ocurrió un error durante el registro');
+        // Cambiamos el setTimeout por una llamada directa a onLoginClick
+        onLoginClick();
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
