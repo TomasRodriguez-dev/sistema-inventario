@@ -9,6 +9,7 @@ const environment = {
     },
     usuarios: {
         listar_usuarios: `${API_BASE_URL}/pev_usuarios`,
+        crear_usuario: `${API_BASE_URL}/pev_usuario`,
         editar_usuario: `${API_BASE_URL}/pev_usuario`,
         eliminar_usuario: `${API_BASE_URL}/pev_usuario`,
     }

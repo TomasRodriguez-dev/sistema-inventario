@@ -5,22 +5,24 @@ import classNames from 'classnames';
 import { Ripple } from 'primereact/ripple';
 import { Badge } from 'primereact/badge';
 import { ScrollPanel } from 'primereact/scrollpanel'; 
+import { useUser } from '../../../context/UserContext'; 
 import './AppMenu.css';
 
 const AppMenu = ({ menuVisible }) => {
     const [activeMenu, setActiveMenu] = useState('');
+    const { user } = useUser(); 
 
     const menu = [
         {
             label: 'Home',
             items: [{
-                label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/inicio'
+                label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/inicio', roles: [1, 2, 3]
             }]
         },
         {
             label: 'Rutas',
             items: [
-                { label: 'Usuarios', icon: 'pi pi-user', to: '/usuarios' },
+                { label: 'Usuarios', icon: 'pi pi-user', to: '/usuarios', roles: [1, 2] },
             ]
         }
     ];
@@ -65,11 +67,15 @@ const AppMenu = ({ menuVisible }) => {
             <CSSTransition classNames="layout-submenu-wrapper" timeout={{ enter: 1000, exit: 450 }} in={activeMenu === item} unmountOnExit>
                 <ul>
                     {item.items.map((child, i) => {
-                        return (
-                            <li key={child.label || i}>
-                                {renderLink(child, i)}
-                            </li>
-                        );
+                        // Verifica si el usuario tiene el rol necesario para ver este item
+                        if (child.roles && child.roles.includes(user?.idrol)) {
+                            return (
+                                <li key={child.label || i}>
+                                    {renderLink(child, i)}
+                                </li>
+                            );
+                        }
+                        return null;
                     })}
                 </ul>
             </CSSTransition>
@@ -95,12 +101,18 @@ const AppMenu = ({ menuVisible }) => {
                                 <li className="layout-menuitem-category">
                                     {item.label}
                                 </li>
-                                {item.items.map((subItem, j) => (
-                                    <li key={subItem.label || j} className={classNames({ 'active-menuitem': activeMenu === subItem })}>
-                                        {renderLink(subItem, j)}
-                                        {subItem.items && renderSubMenu(subItem, j)}
-                                    </li>
-                                ))}
+                                {item.items.map((subItem, j) => {
+                                    // Verifica si el usuario tiene el rol necesario para ver este item
+                                    if (subItem.roles && subItem.roles.includes(user?.idrol)) {
+                                        return (
+                                            <li key={subItem.label || j} className={classNames({ 'active-menuitem': activeMenu === subItem })}>
+                                                {renderLink(subItem, j)}
+                                                {subItem.items && renderSubMenu(subItem, j)}
+                                            </li>
+                                        );
+                                    }
+                                    return null;
+                                })}
                             </React.Fragment>
                         );
                     })}

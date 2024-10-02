@@ -6,6 +6,7 @@ import { Password } from 'primereact/password';
 import { login } from '../../../services/api';
 import { useAlert } from '../../../context/AlertContext';
 import { setLoading } from '../../../redux/loadingSlice';
+import { useUser } from '../../../context/UserContext';
 import './LoginForm.css';
 
 const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
@@ -14,6 +15,7 @@ const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
     const [isError, setIsError] = useState(false);
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
+    const { login: userLogin } = useUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +26,9 @@ const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
             await new Promise(resolve => setTimeout(resolve, 2000));
             
             if (response.success) {
+                // Almacena el token en el localStorage
                 localStorage.setItem('token', response.token);
+                userLogin(response.token);
                 onLoginSuccess(response);
                 showAlert('success', 'Inicio de sesión exitoso', 3000);
             } else {

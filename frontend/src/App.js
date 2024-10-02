@@ -4,6 +4,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import { Provider } from 'react-redux';  
 import store from './redux/store';  
 import { AlertProvider } from './context/AlertContext';
+import { UserProvider } from './context/UserContext';
 import AlertComponent from './components/common/alert/AlertComponent';
 import GlobalProgressBar from './components/common/progress-bar/GlobalProgressBar';
 import AppRoutes from './routes/AppRoutes';
@@ -16,11 +17,13 @@ function App() {
     <Provider store={store}> 
       <PrimeReactProvider>
         <AlertProvider>
-          <Router>
-            <GlobalProgressBar />
-            <AlertComponent />
-            <AppRoutes />
-          </Router>
+          <UserProvider>
+            <Router>
+              <GlobalProgressBar />
+              <AlertComponent />
+              <AppRoutes />
+            </Router>
+          </UserProvider>
         </AlertProvider>
       </PrimeReactProvider>
     </Provider>
