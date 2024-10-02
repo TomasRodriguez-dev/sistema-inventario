@@ -66,41 +66,6 @@ INSERT INTO `metodopago` VALUES (1,'Efectivo','Pago en efectivo'),(2,'Débito','
 UNLOCK TABLES;
 
 --
--- Table structure for table `notificacion`
---
-
-DROP TABLE IF EXISTS `notificacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `notificacion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idusuario` int(11) NOT NULL,
-  `idpago` int(11) DEFAULT NULL,
-  `idusuario_afectado` int(11) DEFAULT NULL,
-  `mensaje` text NOT NULL,
-  `fecha_notificacion` datetime NOT NULL,
-  `tipo_notificacion` varchar(50) NOT NULL,
-  `leida` tinyint(1) DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `idusuario` (`idusuario`),
-  KEY `idpago` (`idpago`),
-  KEY `idusuario_afectado` (`idusuario_afectado`),
-  CONSTRAINT `notificacion_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `notificacion_ibfk_2` FOREIGN KEY (`idpago`) REFERENCES `pago` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `notificacion_ibfk_3` FOREIGN KEY (`idusuario_afectado`) REFERENCES `usuario` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `notificacion`
---
-
-LOCK TABLES `notificacion` WRITE;
-/*!40000 ALTER TABLE `notificacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notificacion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `pago`
 --
 
@@ -124,7 +89,7 @@ CREATE TABLE `pago` (
   CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pago_ibfk_2` FOREIGN KEY (`idmetodopago`) REFERENCES `metodopago` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `pago_ibfk_3` FOREIGN KEY (`idestadopago`) REFERENCES `estadopago` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,6 +98,7 @@ CREATE TABLE `pago` (
 
 LOCK TABLES `pago` WRITE;
 /*!40000 ALTER TABLE `pago` DISABLE KEYS */;
+INSERT INTO `pago` VALUES (1,1,100.50,'2024-10-02',1,1,1,'2024-10-02 21:00:13',NULL);
 /*!40000 ALTER TABLE `pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +118,7 @@ CREATE TABLE `recibo` (
   PRIMARY KEY (`id`),
   KEY `idpago` (`idpago`),
   CONSTRAINT `recibo_ibfk_1` FOREIGN KEY (`idpago`) REFERENCES `pago` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,6 +127,7 @@ CREATE TABLE `recibo` (
 
 LOCK TABLES `recibo` WRITE;
 /*!40000 ALTER TABLE `recibo` DISABLE KEYS */;
+INSERT INTO `recibo` VALUES (1,1,'uploads/recibo-2024-10-02-238a8fb0-6da5-455a-98bd-73270e57a02b.pdf','2024-10-02 21:03:22','Subido');
 /*!40000 ALTER TABLE `recibo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +154,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (1,'superusuario','Control total del sistema','2024-10-02 20:23:18','2024-10-02 20:23:18'),(2,'admin','Administración de usuarios y contenido','2024-10-02 20:23:18','2024-10-02 20:23:18'),(3,'usuario','Usuario estándar','2024-10-02 20:23:18','2024-10-02 20:23:18');
+INSERT INTO `roles` VALUES (1,'superusuario','Control total del sistema','2024-10-02 20:54:35','2024-10-02 20:54:35'),(2,'admin','Administración de usuarios y contenido','2024-10-02 20:54:35','2024-10-02 20:54:35'),(3,'usuario','Usuario estándar','2024-10-02 20:54:35','2024-10-02 20:54:35');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +191,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Admin','adminshop@gmail.com','$2b$10$WE8YsEdgHFhfFVomki50DePQdPxrprBYlWFXU9dkFfwa.6nu4PksK',1,1,NULL,NULL,'2024-10-02 20:24:21',NULL);
+INSERT INTO `usuario` VALUES (1,'SuperAdmin','superadmin@gmail.com','$2b$10$l21DRjcf9Wo7pGkfz1B.heRqz2Tfthe4DS6ve0PLq5v/Wy1JENbkW',1,1,NULL,NULL,'2024-10-02 20:57:20',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -237,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-02 17:30:30
+-- Dump completed on 2024-10-02 19:20:43
