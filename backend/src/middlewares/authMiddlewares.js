@@ -20,7 +20,7 @@ const auth = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, jwtSecret);
         
-        const usuario = await Usuario.findByPk(decoded.userId, {
+        const usuario = await Usuario.findByPk(decoded.idusuario, {
             attributes: ['id', 'idrol'],
             include: [{
                 model: Rol,

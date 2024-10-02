@@ -27,9 +27,9 @@ const Usuario = sequelize.define('Usuario', {
         defaultValue: 3,
     },
     estado: {
-        type: DataTypes.ENUM('activo', 'inactivo'),
+        type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: 'activo',
+        defaultValue: true,
     },
     creado_por: {
         type: DataTypes.INTEGER,

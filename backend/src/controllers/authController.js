@@ -33,14 +33,14 @@ exports.register = async (req, res) => {
             email,
             contrasena,
             idrol: rolUsuario.id,
-            estado: 'activo'
+            estado: true
         });
 
         // Excluir campos sensibles
         const { contrasena: _, idrol, estado, fecha_creacion, fecha_actualizacion, ...usuarioData } = usuario.dataValues;
 
         // Generar el token JWT
-        const payload = { userId: usuario.id, idrol: usuario.idrol };
+        const payload = { idusuario: usuario.id, idrol: usuario.idrol };
         const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
         // Enviar la respuesta
@@ -80,7 +80,7 @@ exports.login = async (req, res) => {
         }
 
         // Generar el token JWT
-        const payload = { userId: usuario.id };
+        const payload = { idusuario: usuario.id, idrol: usuario.idrol };
         const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
         const { contrasena: _, tipo, estado, ultima_conexion, fecha_creacion, fecha_actualizacion, ...usuarioData } = usuario.dataValues;

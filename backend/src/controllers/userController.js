@@ -22,6 +22,11 @@ exports.createUser = async (req, res) => {
             return res.status(403).json({ error: 'No tienes permisos para crear usuarios', success: false });
         }
 
+        // Asegurarse de que no se pueda crear un Super Admin
+        if (idrol === 1) {
+            return res.status(403).json({ error: 'No se puede crear un usuario Super Admin', success: false });
+        }
+
         if (creadorRolId === 2 && idrol !== 3) { 
             return res.status(403).json({ error: 'Los administradores solo pueden crear usuarios comunes', success: false });
         }
@@ -38,7 +43,7 @@ exports.createUser = async (req, res) => {
             email,
             contrasena,
             idrol: creadorRolId === 1 ? idrol : 3,
-            estado: 'activo',
+            estado: true,
             creado_por: creadorId
         });
 
@@ -71,7 +76,7 @@ exports.createUser = async (req, res) => {
  */
 exports.editUser = async (req, res) => {
     const { id } = req.params;
-    const { nombre, email, rol, estado } = req.body;
+    const { nombre, email, idrol, estado } = req.body; 
     const editorRol = req.user.idrol;
 
     try {
@@ -86,7 +91,12 @@ exports.editUser = async (req, res) => {
             return res.status(403).json({ error: 'No tienes permisos para editar usuarios', success: false });
         }
 
-        if (editorRol === 2 && (usuario.idrol !== 3 || rol !== 3)) {
+        // Asegurarse de que no se pueda cambiar a Super Admin
+        if (idrol === 1) {
+            return res.status(403).json({ error: 'No se puede asignar el rol de Super Admin', success: false });
+        }
+
+        if (editorRol === 2 && (usuario.idrol !== 3 || idrol !== 3)) {
             return res.status(403).json({ error: 'Los administradores solo pueden editar usuarios comunes', success: false });
         }
 
@@ -94,8 +104,8 @@ exports.editUser = async (req, res) => {
         await usuario.update({
             nombre: nombre || usuario.nombre,
             email: email || usuario.email,
-            rol: editorRol === 1 ? (rol || usuario.rol) : usuario.rol,
-            estado: estado || usuario.estado,
+            idrol: editorRol === 1 ? (idrol || usuario.idrol) : usuario.idrol,
+            estado: estado !== undefined ? estado : usuario.estado,
             fecha_actualizacion: new Date()
         });
 
@@ -166,7 +176,7 @@ exports.getUsers = async (req, res) => {
 
     try {
         let usuarios;
-        // Si el usuario es superadmin, puede ver todos los usuarios
+        // Si el usuario es ssuperadmin, puede ver todos los usuarios
         if (solicitanteRolId === 1) { 
             usuarios = await Usuario.findAll({
                 attributes: { exclude: ['contrasena'] }
@@ -174,7 +184,7 @@ exports.getUsers = async (req, res) => {
         } else if (solicitanteRolId === 2) { 
             // Si el usuario es admin, puede ver solo los usuarios comunes
             usuarios = await Usuario.findAll({
-                where: { rol_id: 3 }, 
+                where: { idrol: 3 }, 
                 attributes: { exclude: ['contrasena'] }
             });
         } else {
