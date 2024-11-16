@@ -8,10 +8,10 @@ const environment = {
         register: `${API_BASE_URL}/auth/register`,
     },
     usuarios: {
-        listar_usuarios: `${API_BASE_URL}/pev_usuarios`,
-        crear_usuario: `${API_BASE_URL}/pev_usuario`,
-        editar_usuario: `${API_BASE_URL}/pev_usuario`,
-        eliminar_usuario: `${API_BASE_URL}/pev_usuario`,
+        listar_usuarios: `${API_BASE_URL}/inv_usuario`,
+        crear_usuario: `${API_BASE_URL}/inv_usuario`,
+        editar_usuario: `${API_BASE_URL}/inv_usuario`,
+        eliminar_usuario: `${API_BASE_URL}/inv_usuario`,
     }
 };
 

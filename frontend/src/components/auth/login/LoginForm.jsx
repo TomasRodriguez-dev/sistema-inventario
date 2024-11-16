@@ -10,8 +10,8 @@ import { useUser } from '../../../context/UserContext';
 import './LoginForm.css';
 
 const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
-    const [email, setEmail] = useState('');
-    const [contrasena, setPassword] = useState('');
+    const [correo, setCorreo] = useState('');
+    const [contrasenia, setPassword] = useState('');
     const [isError, setIsError] = useState(false);
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
         e.preventDefault();
         dispatch(setLoading(true));
         try {
-            const response = await login({ email, contrasena });
+            const response = await login({ correo, contrasenia });
             // Simulamos un retraso de 2 segundos
             await new Promise(resolve => setTimeout(resolve, 2000));
             
@@ -50,7 +50,7 @@ const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
     const handleLoginError = (errorMessage) => {
         showAlert('error', errorMessage, 5000);
         setIsError(true);
-        setEmail('');
+        setCorreo('');
         setPassword('');
         setTimeout(() => setIsError(false), 3000);
     };
@@ -68,8 +68,8 @@ const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
                         <InputText 
                             id="email" 
                             type="email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
+                            value={correo} 
+                            onChange={(e) => setCorreo(e.target.value)} 
                             required 
                             placeholder='Ingrese su correo electrónico'
                             className={isError ? 'p-invalid' : ''}
@@ -79,7 +79,7 @@ const LoginForm = ({ onLoginSuccess, onRegisterClick }) => {
                         <label htmlFor="password" className='text-base font-medium'>Contraseña</label>
                         <Password 
                             id="password" 
-                            value={contrasena} 
+                            value={contrasenia} 
                             onChange={(e) => setPassword(e.target.value)} 
                             toggleMask 
                             required 

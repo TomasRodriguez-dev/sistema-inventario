@@ -42,7 +42,7 @@ const UsuarioPage = () => {
             setCurrentUser({ ...user });
             setModalMode('edit');
         } else {
-            setCurrentUser({ nombre: '', email: '', contrasena: '', idrol: 3, estado: true });
+            setCurrentUser({ nombre: '', correo: '', contrasenia: '', rol: 'USER', disponible: true });
             setModalMode('create');
         }
         setModalVisible(true);
@@ -54,7 +54,6 @@ const UsuarioPage = () => {
     };
 
     const handleInputChange = (e) => {
-        console.log(e.target);
         const { name, value } = e.target;
         setCurrentUser(prev => ({ ...prev, [name]: value }));
     };
@@ -64,16 +63,16 @@ const UsuarioPage = () => {
             let response;
             const userData = {
                 nombre: currentUser.nombre,
-                email: currentUser.email,
-                idrol: currentUser.idrol,
-                estado: currentUser.estado
+                correo: currentUser.correo,
+                rol: currentUser.rol,
+                disponible: currentUser.disponible
             };
             
             if (modalMode === 'create') {
-                userData.contrasena = currentUser.contrasena;
+                userData.contrasenia = currentUser.contrasenia;
                 response = await api.post(environment.usuarios.crear_usuario, userData);
             } else {
-                response = await api.put(`${environment.usuarios.editar_usuario}/${currentUser.id}`, userData);
+                response = await api.patch(`${environment.usuarios.editar_usuario}/${currentUser.id}`, userData);
             }
             
             if (response.data) {
@@ -89,16 +88,16 @@ const UsuarioPage = () => {
 
     /**
      * Función para obtener el nombre del rol basado en el ID
-     * @param {number} idrol - El ID del rol
+     * @param {string} rol - El rol
      * @returns {string} - El nombre del rol
      */
-    const getRolName = (idrol) => {
-        switch (idrol) {
-            case 1:
+    const getRolName = (rol) => {  
+        switch (rol) {
+            case 'SUPERADMIN':
                 return 'Super Admin';
-            case 2:
+            case 'ADMIN':
                 return 'Admin';
-            case 3:
+            case 'USER':
                 return 'Común';
             default:
                 return 'Desconocido';
@@ -111,7 +110,7 @@ const UsuarioPage = () => {
      * @returns {React.Fragment} - El rol del usuario
      */
     const rolBodyTemplate = (rowData) => {
-        const rolName = getRolName(rowData.idrol);
+        const rolName = getRolName(rowData.rol);
         return <span>{rolName}</span>;
     };
 
@@ -121,8 +120,8 @@ const UsuarioPage = () => {
      * @returns {React.Fragment} - El estado del usuario
      */
     const statusBodyTemplate = (rowData) => {
-        const status = rowData.estado ? 'Activo' : 'Inactivo';
-        return <Tag value={status} severity={getSeverity(rowData.estado)} />;
+        const status = rowData.disponible ? 'Activo' : 'Inactivo';
+        return <Tag value={status} severity={getSeverity(rowData.disponible)} />;
     };
 
     /**
@@ -175,9 +174,9 @@ const UsuarioPage = () => {
                         emptyMessage="No se encontraron usuarios" rowsPerPageOptions={[5, 10, 25, 50]}>
                     <Column field="id" header="ID" style={{ width: '10%' }}></Column>
                     <Column field="nombre" header="Nombre" style={{ width: '20%' }}></Column>
-                    <Column field="email" header="Email"  style={{ width: '20%' }}></Column>
-                    <Column field="idrol" header="Rol" body={rolBodyTemplate} style={{ width: '15%' }}></Column>
-                    <Column field="estado" header="Estado" body={statusBodyTemplate}  style={{ width: '15%' }}></Column>
+                    <Column field="correo" header="Email"  style={{ width: '20%' }}></Column>
+                    <Column field="rol" header="Rol" body={rolBodyTemplate} style={{ width: '15%' }}></Column>
+                    <Column field="disponible" header="Estado" body={statusBodyTemplate}  style={{ width: '15%' }}></Column>
                     <Column body={actionBodyTemplate} exportable={false} style={{ width: '20%' }}></Column>
                 </DataTable>
                 <UserModal 
@@ -187,7 +186,7 @@ const UsuarioPage = () => {
                     onSave={saveUser}
                     onChange={handleInputChange}
                     mode={modalMode}
-                    currentUserRole={currentLoggedUser?.idrol}
+                    currentUserRole={currentLoggedUser?.rol}
                 />
             </div>
         </div>

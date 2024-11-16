@@ -16,13 +16,13 @@ const AppMenu = ({ menuVisible }) => {
         {
             label: 'Home',
             items: [{
-                label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/inicio', roles: [1, 2, 3]
+                label: 'Inicio', icon: 'pi pi-fw pi-home', to: '/inicio', rol: ['SUPERADMIN', 'ADMIN', 'USER']
             }]
         },
         {
             label: 'Rutas',
             items: [
-                { label: 'Usuarios', icon: 'pi pi-user', to: '/usuarios', roles: [1, 2] },
+                { label: 'Usuarios', icon: 'pi pi-user', to: '/usuarios', rol: ['SUPERADMIN'] },
             ]
         }
     ];
@@ -68,7 +68,7 @@ const AppMenu = ({ menuVisible }) => {
                 <ul>
                     {item.items.map((child, i) => {
                         // Verifica si el usuario tiene el rol necesario para ver este item
-                        if (child.roles && child.roles.includes(user?.idrol)) {
+                        if (child.rol && child.rol.includes(user?.rol)) {
                             return (
                                 <li key={child.label || i}>
                                     {renderLink(child, i)}
@@ -103,7 +103,7 @@ const AppMenu = ({ menuVisible }) => {
                                 </li>
                                 {item.items.map((subItem, j) => {
                                     // Verifica si el usuario tiene el rol necesario para ver este item
-                                    if (subItem.roles && subItem.roles.includes(user?.idrol)) {
+                                    if (subItem.rol && subItem.rol.includes(user?.rol)) {
                                         return (
                                             <li key={subItem.label || j} className={classNames({ 'active-menuitem': activeMenu === subItem })}>
                                                 {renderLink(subItem, j)}

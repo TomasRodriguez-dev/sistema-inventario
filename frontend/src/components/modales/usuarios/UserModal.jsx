@@ -12,15 +12,15 @@ const UserModal = ({ visible, onHide, user, onSave, onChange, mode, currentUserR
 
     // Modificamos las opciones de rol para excluir Super Admin
     const rolOptions = [
-        { label: 'Admin', value: 2 },
-        { label: 'Común', value: 3 }
+        { label: 'Admin', value: 'ADMIN' },
+        { label: 'Común', value: 'USER' }
     ];
 
     const title = mode === 'create' ? 'Agregar Usuario' : 'Editar Usuario';
 
     // Función para determinar si se debe mostrar la opción de rol
     const shouldShowRolOption = () => {
-        return currentUserRole === 1; // Solo Super Admin puede cambiar roles
+        return currentUserRole === 'SUPERADMIN'; // Solo Super Admin puede cambiar roles
     };
 
     return (
@@ -31,7 +31,6 @@ const UserModal = ({ visible, onHide, user, onSave, onChange, mode, currentUserR
             onHide={onHide}
             footer={
                 <div>
-                    <Button label="Cancelar" icon="pi pi-times" onClick={onHide} className="p-button-text" />
                     <Button label="Guardar" icon="pi pi-check" onClick={onSave} autoFocus />
                 </div>
             }
@@ -43,22 +42,22 @@ const UserModal = ({ visible, onHide, user, onSave, onChange, mode, currentUserR
                         <InputText id="nombre" name="nombre" value={user.nombre} onChange={onChange} />
                     </div>
                     <div className="p-field mb-3">
-                        <label htmlFor="email">Email</label>
-                        <InputText id="email" name="email" value={user.email} onChange={onChange} />
+                        <label htmlFor="correo">E-mail</label>
+                        <InputText id="correo" name="correo" value={user.correo} onChange={onChange} />
                     </div>
                     {mode === 'create' && (
                         <div className="p-field mb-3">
-                            <label htmlFor="contrasena">Contraseña</label>
-                            <InputText id="contrasena" name="contrasena" type="password" value={user.contrasena} onChange={onChange} />
+                            <label htmlFor="contrasenia">Contraseña</label>
+                            <InputText id="contrasenia" name="contrasenia" type="password" value={user.contrasenia} onChange={onChange} />
                         </div>
                     )}
                     {shouldShowRolOption() && (
                         <div className="p-field mb-3">
-                            <label htmlFor="idrol">Rol</label>
+                            <label htmlFor="rol">Rol</label>
                             <Dropdown 
-                                id="idrol" 
-                                name="idrol" 
-                                value={user.idrol} 
+                                id="rol" 
+                                name="rol" 
+                                value={user.rol} 
                                 options={rolOptions} 
                                 onChange={onChange}
                                 placeholder="Seleccione un rol" 
@@ -66,11 +65,11 @@ const UserModal = ({ visible, onHide, user, onSave, onChange, mode, currentUserR
                         </div>
                     )}
                     <div className="p-field mb-3">
-                        <label htmlFor="estado">Estado</label>
+                        <label htmlFor="disponible">Estado</label>
                         <Dropdown 
-                            id="estado" 
-                            name="estado" 
-                            value={user.estado} 
+                            id="disponible" 
+                            name="disponible" 
+                            value={user.disponible} 
                             options={estadoOptions} 
                             onChange={onChange}
                             placeholder="Seleccione un estado" 
