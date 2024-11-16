@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PaginatorDto } from 'src/common/paginator.dto';
 import { CreateEdicionesDto } from 'src/ediciones/dto/create-ediciones.dto';
 import { UpdateUsuarioDto } from '../usuarios/dto/update-usuario.dto';
+import { Rol } from '@prisma/client';
 
 @Injectable()
 export class ProductosService {
@@ -25,10 +26,12 @@ export class ProductosService {
     return newProducto;
   }
 
-  async findAll(paginator: PaginatorDto) {
+  async findAll(paginator: PaginatorDto, rol: Rol) {
     const { page, perPage } = paginator || {};
     let metadata = {};
-    const totalPages = await this.prisma.producto.count();
+    const totalPages = await this.prisma.producto.count({
+      where: rol === Rol.USER ? { activo: true } : undefined
+    });
     const lastPages = Math.ceil(totalPages / (perPage || 10));
     if (page && perPage) 
       metadata = {
@@ -37,6 +40,7 @@ export class ProductosService {
         lastPages 
       };
     const data = await this.prisma.producto.findMany({
+      where: rol === Rol.USER ? { activo: true } : undefined,
       skip: page ? (page - 1) * perPage : undefined,
       take: perPage ? perPage : undefined,
     });

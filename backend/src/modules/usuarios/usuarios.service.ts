@@ -15,6 +15,11 @@ export class UsuariosService {
     private readonly authService: AuthService
   ) {}
 
+  /**
+   * Crea un nuevo usuario
+   * @param createUsuarioDto 
+   * @returns 
+   */
   async create(createUsuarioDto: CreateUsuarioDto) {
     const { nombre, correo, contrasenia, rol, disponible } = createUsuarioDto;
     const hashPassword = await this.authService.hashContrasenia(contrasenia);
@@ -31,6 +36,11 @@ export class UsuariosService {
     return newUsuario;
   }
 
+  /**
+   * Obtiene todos los usuarios
+   * @param paginator 
+   * @returns 
+   */
   async findAll(paginator: PaginatorDto) {
     const { page, perPage } = paginator || {};
     let metadata = {};
@@ -53,6 +63,11 @@ export class UsuariosService {
     };
   }
 
+  /**
+   * Obtiene un usuario por su ID
+   * @param id 
+   * @returns 
+   */
   async findOne(id: number) {
     const usuario = await this.prisma.usuario.findFirst({ 
       where: { id, disponible: true } 
@@ -62,6 +77,13 @@ export class UsuariosService {
     return usuario;
   }
 
+  /**
+   * Actualiza un usuario
+   * @param id 
+   * @param updateUsuarioDto 
+   * @param usuario 
+   * @returns 
+   */
   async update(
     id: number, 
     updateUsuarioDto: UpdateUsuarioDto,
@@ -86,6 +108,12 @@ export class UsuariosService {
     return result;
   }
 
+  /**
+   * Elimina un usuario
+   * @param id 
+   * @param usuario 
+   * @returns 
+   */
   async remove(
     id: number,
     usuario: UpdateUsuarioDto

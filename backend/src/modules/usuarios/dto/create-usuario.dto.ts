@@ -1,5 +1,6 @@
 import { IsEmail, IsIn, IsString, IsBoolean, IsOptional } from "class-validator";
 
+
 export class CreateUsuarioDto {
     @IsString()
     nombre: string;
@@ -9,7 +10,8 @@ export class CreateUsuarioDto {
     contrasenia: string;
     @IsString()
     @IsIn(['USER', 'ADMIN'], {message: 'Los roles permitidos son USER o ADMIN'})
-    rol: string;
+    @IsOptional()
+    rol?: string;
     @IsBoolean()
     @IsOptional()
     disponible?: boolean;
