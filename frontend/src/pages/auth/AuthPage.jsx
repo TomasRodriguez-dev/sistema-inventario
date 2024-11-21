@@ -21,7 +21,7 @@ const AuthPage = () => {
 
     return (
         <div className='flex flex-row h-screen w-full'>
-            <div className='w-6 h-full relative hidden  md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l'>
+            <div className='flex-1 h-full relative hidden  md:flex flex-auto items-center justify-center h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l'>
                 <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
                     preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
                     <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
@@ -40,7 +40,7 @@ const AuthPage = () => {
                     <rect width="220" height="192" fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"></rect>
                 </svg>
             </div>
-            <div className='w-6 h-full flex items-center justify-center'>
+            <div className={`flex flex-1 items-center justify-center w-full`}>
                 {isLoginForm ? (
                     <LoginForm onLoginSuccess={handleLoginSuccess} onRegisterClick={toggleForm} />
                 ) : (
