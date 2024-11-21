@@ -10,7 +10,8 @@ const PageTitle = () => {
                 return 'Inicio';
             case '/usuarios':
                 return 'Usuarios';
-            // Agrega más casos según tus rutas
+            case '/productos':
+                return 'Productos';
             default:
                 return 'Página no encontrada';
         }

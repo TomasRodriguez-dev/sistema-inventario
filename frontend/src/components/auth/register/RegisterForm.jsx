@@ -7,15 +7,15 @@ import { useAlert } from '../../../context/AlertContext';
 
 const RegisterForm = ({ onRegisterSuccess, onLoginClick }) => {
   const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contrasenia, setContrasenia] = useState('');
   const [isError, setIsError] = useState(false);
   const { showAlert } = useAlert();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await register({ nombre, email, contrasena });
+      const response = await register({ nombre, correo, contrasenia });
       
       if ( response.success) {
         onRegisterSuccess(response.success);
@@ -38,8 +38,8 @@ const RegisterForm = ({ onRegisterSuccess, onLoginClick }) => {
     showAlert('error', errorMessage, 5000);
     setIsError(true);
     setNombre('');
-    setEmail('');
-    setContrasena('');
+    setCorreo('');
+    setContrasenia('');
     setTimeout(() => setIsError(false), 3000);
   };
 
@@ -63,12 +63,13 @@ const RegisterForm = ({ onRegisterSuccess, onLoginClick }) => {
             />
           </div>
           <div className="flex flex-column gap-2 sm:mb-4">
-            <label htmlFor="email" className='text-base font-medium'>Correo Electrónico</label>
+            <label htmlFor="correo" className='text-base font-medium'>Correo Electrónico</label>
             <InputText 
-              id="email" 
+              id="correo" 
               type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} required 
+              value={correo} 
+              onChange={(e) => setCorreo(e.target.value)} 
+              required 
               placeholder='Ingrese su correo electrónico'
               className={isError ? 'p-invalid' : ''}
             />
@@ -77,8 +78,8 @@ const RegisterForm = ({ onRegisterSuccess, onLoginClick }) => {
             <label htmlFor="password" className='text-base font-medium'>Contraseña</label>
             <Password 
               id="password" 
-              value={contrasena} 
-              onChange={(e) => setContrasena(e.target.value)} 
+              value={contrasenia} 
+              onChange={(e) => setContrasenia(e.target.value)} 
               toggleMask 
               required 
               placeholder='Ingrese su contraseña'

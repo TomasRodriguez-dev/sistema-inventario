@@ -12,6 +12,12 @@ const environment = {
         crear_usuario: `${API_BASE_URL}/inv_usuario`,
         editar_usuario: `${API_BASE_URL}/inv_usuario`,
         eliminar_usuario: `${API_BASE_URL}/inv_usuario`,
+    },
+    productos: {
+        listar_productos: `${API_BASE_URL}/inv_producto`,
+        crear_producto: `${API_BASE_URL}/inv_producto`,
+        editar_producto: `${API_BASE_URL}/inv_producto`,
+        eliminar_producto: `${API_BASE_URL}/inv_producto`,
     }
 };
 

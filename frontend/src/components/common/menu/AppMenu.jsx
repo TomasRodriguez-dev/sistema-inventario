@@ -23,6 +23,7 @@ const AppMenu = ({ menuVisible }) => {
             label: 'Rutas',
             items: [
                 { label: 'Usuarios', icon: 'pi pi-user', to: '/usuarios', rol: ['SUPERADMIN'] },
+                { label: 'Productos', icon: 'pi pi-box', to: '/productos', rol: ['SUPERADMIN', 'ADMIN', 'USER'] },
             ]
         }
     ];

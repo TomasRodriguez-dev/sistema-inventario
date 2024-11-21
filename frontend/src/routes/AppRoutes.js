@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoutes';
 import PublicRoute from './PublicRoute';
 import Layout from '../components/layout/LayoutComponent';
 import UsuarioPage from '../pages/usuarios/UsuarioPage';
+import ProductosPage from '../pages/productos/ProductosPage';
 
 const AppRoutes = () => {
     return (
@@ -34,7 +35,13 @@ const AppRoutes = () => {
                     </Layout>
                 </PrivateRoute>
             } />
-            {/* Agrega aquí más rutas privadas envueltas en el componente Layout */}
+            <Route path="/productos" element={
+                <PrivateRoute>
+                    <Layout>
+                        <ProductosPage />
+                    </Layout>
+                </PrivateRoute>
+            } />
             <Route path="*" element={<Navigate to="/inicio" replace />} />
         </Routes>
     );
