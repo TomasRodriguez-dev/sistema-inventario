@@ -13,6 +13,11 @@ export class ProductosService {
     private readonly prisma: PrismaService
   ) {}
 
+  /**
+   * Crea un nuevo producto
+   * @param createProductoDto 
+   * @returns 
+   */
   async create(createProductoDto: CreateProductoDto) {
     const { nombre, descripcion, precio, cantidad } = createProductoDto;
     const newProducto = await this.prisma.producto.create({
@@ -26,6 +31,12 @@ export class ProductosService {
     return newProducto;
   }
 
+  /**
+   * Obtiene todos los productos
+   * @param paginator 
+   * @param rol 
+   * @returns 
+   */
   async findAll(paginator: PaginatorDto, rol: Rol) {
     const { page, perPage } = paginator || {};
     let metadata = {};
@@ -50,6 +61,11 @@ export class ProductosService {
     };
   }
 
+  /**
+   * Obtiene un producto por su ID
+   * @param id 
+   * @returns 
+   */
   async findOne(id: number) {
     const producto = await this.prisma.producto.findFirst({ 
       where: { id, activo: true } 
@@ -58,6 +74,13 @@ export class ProductosService {
     return producto;
   }
 
+  /**
+   * Actualiza un producto
+   * @param id 
+   * @param updateProductoDto 
+   * @param usuario 
+   * @returns 
+   */
   async update(
     id: number, 
     updateProductoDto: UpdateProductoDto, 
@@ -80,6 +103,12 @@ export class ProductosService {
     return result;
   }
 
+  /**
+   * Elimina un producto
+   * @param id 
+   * @param usuario 
+   * @returns 
+   */
   async remove(
     id: number, 
     usuario: { id: number }
