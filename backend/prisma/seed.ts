@@ -1,19 +1,21 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
-    const superUsuario = await prisma.usuario.upsert({
+    const hashedPassword = await bcrypt.hash('12345678', 10);
+
+    await prisma.usuario.upsert({
         where: { correo: 'superadmin@gmail.com' },
         update: {},
         create: {
             nombre: 'SuperUsuario',
             correo: 'superadmin@gmail.com',
-            contrasenia: '12345678',
+            contrasenia: hashedPassword,
             rol: 'SUPERADMIN',
         },
     });
-
 }
 
 main()
